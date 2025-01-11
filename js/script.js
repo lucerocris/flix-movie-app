@@ -340,7 +340,7 @@ function init() {
     case '/search.html':
       console.log('Search');
       break;
-    case 'shows':
+    case '/shows':
     case '/shows.html':
       displayPopularShows();
       break;
