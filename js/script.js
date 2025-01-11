@@ -336,6 +336,7 @@ function init() {
     case '/search.html':
       console.log('Search');
       break;
+    case'show':
     case '/shows.html':
       displayPopularShows();
       break;
