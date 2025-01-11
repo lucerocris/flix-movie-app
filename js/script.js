@@ -246,10 +246,14 @@ async function displaySlider() {
     div.innerHTML = `
   
             <a href="movie-details.html?id=${movie.id}">
-              <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
+              <img src="https://image.tmdb.org/t/p/w500${
+                movie.poster_path
+              }" alt="${movie.title}" />
             </a>
             <h4 class="swiper-rating">
-              <i class="fas fa-star text-secondary"></i> ${movie.vote_average.toFixed(1)} / 10
+              <i class="fas fa-star text-secondary"></i> ${movie.vote_average.toFixed(
+                1
+              )} / 10
             </h4>
          
   `;
@@ -270,15 +274,15 @@ function initSwiper() {
     },
     breakpoints: {
       500: {
-        slidesPerView: 2
+        slidesPerView: 2,
       },
       700: {
-        slidesPerView: 3
+        slidesPerView: 3,
       },
       1200: {
-        slidesPerView: 4
+        slidesPerView: 4,
       },
-    }
+    },
   });
 }
 
@@ -336,7 +340,7 @@ function init() {
     case '/search.html':
       console.log('Search');
       break;
-    case'show':
+    case 'shows':
     case '/shows.html':
       displayPopularShows();
       break;
