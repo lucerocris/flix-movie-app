@@ -1,5 +1,16 @@
 const global = {
   currentPage: window.location.pathname,
+  search: {
+    term: '',
+    type: '',
+    page: 1,
+    totalPages: 1,
+  },
+
+  api: {
+    apiKey: '7e924c31fb55799d590b546b15ec0e26',
+    apiURL: 'https://api.themoviedb.org/3/',
+  },
 };
 
 // Display 20 most popular Movies
@@ -234,6 +245,21 @@ function displayBackgroundImage(type, backgroundPath) {
   }
 }
 
+async function search() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  global.search.type = urlParams.get('type');
+  global.search.term = urlParams.get('search-term');
+
+  if ((global.search.term !== '') & (global.search.term !== null)) {
+    const results = searchAPIData();
+    console.log(results);
+  } else {
+    showAlert('Please enter a search term');
+  }
+}
+
 // Display Slider Movies
 
 async function displaySlider() {
@@ -289,8 +315,8 @@ function initSwiper() {
 // Fetch Data from TMDB API
 
 async function fetchAPIData(endpoint) {
-  const API_KEY = '7e924c31fb55799d590b546b15ec0e26';
-  const API_URL = 'https://api.themoviedb.org/3/';
+  const API_KEY = global.api.apiKey;
+  const API_URL = global.api.apiURL;
 
   showSpinner();
 
@@ -313,6 +339,23 @@ function hideSpinner() {
   document.querySelector('.spinner').classList.remove('show');
 }
 
+async function searchAPIData() {
+  const API_KEY = global.api.apiKey;
+  const API_URL = global.api.apiURL;
+
+  showSpinner();
+
+  const response = await fetch(
+    `${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-US&query=${global.search.term}`
+  );
+
+  const data = await response.json();
+
+  hideSpinner();
+
+  return data;
+}
+
 function highlightActiveLink() {
   const links = document.querySelectorAll('.nav-link');
   links.forEach((link) => {
@@ -324,6 +367,15 @@ function highlightActiveLink() {
 
 function addCommasToNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function showAlert(message, className) {
+  const alertEL = document.createElement('div');
+  alertEL.classList.add('alert', className);
+  alertEL.appendChild(document.createTextNode(`${message}`));
+
+  document.querySelector('#alert').appendChild(alertEL);
+  setTimeout(() => alertEL.remove(), 3000);
 }
 
 //Init App
@@ -338,7 +390,7 @@ function init() {
       displayMovieDetails();
       break;
     case '/search.html':
-      console.log('Search');
+      search();
       break;
     case '/shows':
     case '/shows.html':
