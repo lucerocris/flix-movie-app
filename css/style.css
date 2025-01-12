@@ -341,3 +341,9 @@ section h2 {
 .error {
   background: red;
 }
+
+@media(max-width: 768px) {
+  .details-top {
+    flex-direction: column;
+  }
+}
