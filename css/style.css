@@ -344,6 +344,14 @@ section h2 {
 
 @media(max-width: 768px) {
   .details-top {
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .card-img-top {
+    margin: 0 !important;
   }
 }
